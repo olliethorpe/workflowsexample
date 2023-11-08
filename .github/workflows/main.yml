@@ -41,8 +41,7 @@ jobs:
   verify:
     needs: build
     runs-on: ubuntu-latest
-    outputs: 
-      validationStatus: ${{ steps.validation.outputs.validationStatus }}
+
     steps:
       - name: Download cloudformation-template
         uses: actions/download-artifact@v3
@@ -65,13 +64,13 @@ jobs:
         id: validation
         run: |
           cd ~/artifacts
-          validationStatus=$(aws cloudformation validate-template --template-body file://BaCloudAcademyGithubCdkOlliethorpeStack.template.json && echo "failure1" || echo "failure2")
-          echo "validationStatus=$validationStatus" >> "$GITHUB_OUTPUT"
+          validationStatus=$(aws cloudformation validate-template --template-body file://BaCloudAcademyGithubCdkOlliethorpeStack.template.json && echo "su" || echo "failure2")
+          echo "vStatus=$validationStatus" >> $GITHUB_OUTPUT
     
   deploy:
     needs: verify
     runs-on: ubuntu-latest
-    if: ${{ needs.verify.outputs.validationStatus == 'success' }}
+    if: ${{ needs.verify.steps.validation.vStatus == 'success' }}
     steps:
       - name: Checkout repository
         uses: actions/checkout@v2
