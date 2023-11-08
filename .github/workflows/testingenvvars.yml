@@ -14,7 +14,7 @@ jobs:
     - shell: python
       run: |
         import os
-        print(f'{os.getenv.get('GLOBAL_MESSAGE')}')"
+        print(f'{os.getenv('GLOBAL_MESSAGE')}')"
 
   greet:
     runs-on: ubuntu-latest
@@ -24,4 +24,7 @@ jobs:
     - uses: actions/setup-python@v4
       with:
         pyhton-version: '3.9'
-    #- run: pyhton -c "import os; print(f'{os.environ.get['GLOBAL_MESSAGE']}')"
+    - shell: python
+      run: |
+        import os
+        print(f'{os.getenv('GREETING_MESSAGE')}')"
