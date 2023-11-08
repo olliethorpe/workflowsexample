@@ -42,10 +42,10 @@ jobs:
     needs: build
     runs-on: ubuntu-latest
     steps:
-      - name: cloudformation-template
+      - name: download cloudformation-template
         uses: actions/download-artifact@v3
         with:
-          name: cdk-template-artifact
+          name: cloudformation-template
           path: ~/artifacts
 
       - uses: aws-actions/setup-sam@v2
