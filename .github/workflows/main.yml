@@ -1,7 +1,9 @@
 name: CDK Application
 
 on:
-  push
+  push:
+    branches:
+      - feature/cdk
     
 env:
   CDK_LOCAL_FOLDER: ./ba-cloud-academy-github-cdk-olliethorpe
@@ -65,12 +67,12 @@ jobs:
         run: |
           cd ~/artifacts
           validationStatus=$(aws cloudformation validate-template --template-body file://BaCloudAcademyGithubCdkOlliethorpeStack.template.json && echo "su" || echo "failure2")
-          echo "vStatus=$validationStatus" >> $GITHUB_OUTPUT
+          echo "VSTATUS=$($validationStatus)" >> $GITHUB_OUTPUT
     
   deploy:
     needs: verify
     runs-on: ubuntu-latest
-    if: ${{ needs.verify.steps.validation.vStatus == 'success' }}
+    if: ${{ needs.verify.steps.validation.VSTATUS == 'success' }}
     steps:
       - name: Checkout repository
         uses: actions/checkout@v2
