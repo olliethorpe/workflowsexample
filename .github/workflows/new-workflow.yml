@@ -35,11 +35,9 @@ jobs:
         uses: actions/download-artifact@v3
         with:
           name: my-text-artefact
-          path: ./artifacts/my_text_file.txt
 
       - name: echo artefact
         shell: bash
-        working-directory: ./artifacts
         run: |
           cat my_text_file.txt
         
