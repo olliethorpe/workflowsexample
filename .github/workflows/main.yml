@@ -75,6 +75,8 @@ jobs:
             validationStatus="failure"
           fi
           echo "vstatus=$validationStatus" >> $GITHUB_OUTPUT
+          echo "vstatus=$validationStatus"
+
         
   deploy:
     needs: verify
