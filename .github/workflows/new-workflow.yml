@@ -39,7 +39,8 @@ jobs:
 
       - name: echo artefact
         shell: bash
+        working-directory: ./artifacts
         run: |
-          cat ./artifacts/my_text_file.txt
+          cat my_text_file.txt
         
         
