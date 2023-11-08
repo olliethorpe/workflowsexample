@@ -59,4 +59,4 @@ jobs:
           aws-region: ${{ secrets.AWS_REGION }}
 
       - run: |
-          aws cloudformation validate-template --template-body file://tamplate.json
+          aws cloudformation validate-template --template-body file://template.json
