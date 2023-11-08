@@ -43,6 +43,8 @@ jobs:
   verify:
     needs: build
     runs-on: ubuntu-latest
+    outputs:
+      vstatus: ${{ steps.validation.outputs.vstatus }}
     steps:
       - name: Download cloudformation-template
         uses: actions/download-artifact@v3
@@ -72,14 +74,12 @@ jobs:
           else
             validationStatus="failure"
           fi
-          echo "VSTATUS=$validationStatus" >> $GITHUB_OUTPUT
-          echo $VSTATUS
+          echo "vstatus=$validationStatus" >> $GITHUB_OUTPUT
         
- 
   deploy:
     needs: verify
     runs-on: ubuntu-latest
-    if: ${{ needs.verify.steps.validation.VSTATUS == 'success' }}
+    if: ${{ needs.verify.outputs.vstatus == 'success' }}
     steps:
       - name: Checkout repository
         uses: actions/checkout@v2
