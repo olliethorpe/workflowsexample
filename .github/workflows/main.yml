@@ -41,7 +41,7 @@ jobs:
       - uses: actions/upload-artifact@v3
         with:
           name: cdk-assets-artifact
-          path: ./ba-cloud-academy-github-cdk-olliethorpe/cdk.out/ba-cloud-academy-github-cdk-olliethorpe/BaCloudAcademyGithubCdkOlliethorpeStack.assets.json
+          path: ./ba-cloud-academy-github-cdk-olliethorpe/cdk.out/BaCloudAcademyGithubCdkOlliethorpeStack.assets.json
    
   verify:
     needs: build
