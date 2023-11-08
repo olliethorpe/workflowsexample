@@ -27,38 +27,27 @@ jobs:
         run: |
           python -m pip install -r requirements.txt
           
-      - name: build cloudFormation template
+      - name: synth CDK
         working-directory: ${{ env.CDK_LOCAL_FOLDER }} 
         run: |
           cdk synth
 
-      - uses: actions/upload-artifact@v3
+      - name: upload artifacts
+        uses: actions/upload-artifact@v3
         with:
-          name: cdk-template-artifact
-          path: ./ba-cloud-academy-github-cdk-olliethorpe/cdk.out/BaCloudAcademyGithubCdkOlliethorpeStack.template.json
-
-
-      - uses: actions/upload-artifact@v3
-        with:
-          name: cdk-assets-artifact
-          path: ./ba-cloud-academy-github-cdk-olliethorpe/cdk.out/BaCloudAcademyGithubCdkOlliethorpeStack.assets.json
+          name: cloudformation-template
+          path: ./ba-cloud-academy-github-cdk-olliethorpe/cdk.out/
    
   verify:
     needs: build
     runs-on: ubuntu-latest
     steps:
-      - name: download artifact
+      - name: cloudformation-template
         uses: actions/download-artifact@v3
         with:
           name: cdk-template-artifact
-          path: template.json
+          path: ~/artifacts
 
-      - name: download artifact 2
-        uses: actions/download-artifact@v3
-        with:
-          name: cdk-assets-artifact
-          path: assets.json
-      
       - uses: aws-actions/setup-sam@v2
         with:
           use-installer: true
@@ -70,5 +59,7 @@ jobs:
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           aws-region: ${{ secrets.AWS_REGION }}
 
-      - run: |
-          aws cloudformation validate-template --template-body file://template.json --cli-input-json file://assets.json
+      - name: Validate cloudformation template
+        working-directory: ~/artifacts
+        run: |
+          aws cloudformation validate-template --template-body path://BaCloudAcademyGithubCdkOlliethorpeStack.template.json
