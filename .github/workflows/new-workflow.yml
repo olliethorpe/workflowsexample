@@ -29,6 +29,7 @@ jobs:
   
   print-artefact:
     runs-on: ubuntu-latest
+    needs: build-artefacts
     steps:
       - name: download artefact
         uses: actions/download-artifact@v3
