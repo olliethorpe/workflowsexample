@@ -45,6 +45,7 @@ jobs:
         uses: actions/download-artifact@v3
         with:
           name: cdk-template-artifact
+          path: template.json
       
       - uses: aws-actions/setup-sam@v2
         with:
@@ -58,4 +59,4 @@ jobs:
           aws-region: ${{ secrets.AWS_REGION }}
 
       - run: |
-          aws cloudformation validate-template --template-body file://jsonBaCloudAcademyGithubCdkOlliethorpeStack.template.json
+          aws cloudformation validate-template --template-body file://tamplate.json
