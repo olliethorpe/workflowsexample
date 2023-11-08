@@ -62,4 +62,4 @@ jobs:
       - name: Validate cloudformation template
         run: |
           cd ~/artifacts
-          aws cloudformation validate-template --template-body path://BaCloudAcademyGithubCdkOlliethorpeStack.template.json
+          aws cloudformation validate-template --template-body file://BaCloudAcademyGithubCdkOlliethorpeStack.template.json
