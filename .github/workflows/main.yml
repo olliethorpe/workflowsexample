@@ -65,7 +65,7 @@ jobs:
         id: validation
         run: |
           cd ~/artifacts
-          validationStatus=$(aws cloudformation validate-template --template-body file://BaCloudAcademyGithubCdkOlliethorpeStack.template.json && echo "failure" || echo "failure")
+          validationStatus=$(aws cloudformation validate-template --template-body file://BaCloudAcademyGithubCdkOlliethorpeStack.template.json && echo "failure1" || echo "failure2")
           echo "::set-output name=validationStatus::${validationStatus}"
     
   deploy:
@@ -93,7 +93,7 @@ jobs:
           aws-region: ${{ secrets.AWS_REGION }}
 
       - name: Install Python dependencies
-        working-directory: ${{ env.CDK_LOCAL_FOLDER }} 
+        working-directory: ${{ env.CDK_LOCAL_FOLDER }}
         run: |
           python -m pip install -r requirements.txt
           
