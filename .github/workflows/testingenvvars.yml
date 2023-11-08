@@ -13,7 +13,8 @@ jobs:
         python-version: '3.9'
     - shell: python
       run: |
-        print(f'hello world')"
+        import os
+        print(f'{os.getenv.get('GLOBAL_MESSAGE')}')"
 
   greet:
     runs-on: ubuntu-latest
