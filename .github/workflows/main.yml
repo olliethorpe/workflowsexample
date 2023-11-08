@@ -60,6 +60,6 @@ jobs:
           aws-region: ${{ secrets.AWS_REGION }}
 
       - name: Validate cloudformation template
-        working-directory: ~/artifacts
         run: |
+          cd ~/artifacts
           aws cloudformation validate-template --template-body path://BaCloudAcademyGithubCdkOlliethorpeStack.template.json
