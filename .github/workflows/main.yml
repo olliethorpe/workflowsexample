@@ -37,11 +37,6 @@ jobs:
           name: cdk-template-artifact
           path: ./ba-cloud-academy-github-cdk-olliethorpe/cdk.out/BaCloudAcademyGithubCdkOlliethorpeStack.template.json
 
-      - uses: actions/upload-artifact@v3
-        with:
-          name: cdk-assets-artifact
-          path: ./ba-cloud-academy-github-cdk-olliethorpe/cdk.out/BaCloudAcademyGithubCdkOlliethorpeStack.assets.json
-
   verify:
     needs: build
     runs-on: ubuntu-latest
@@ -64,4 +59,4 @@ jobs:
           aws-region: ${{ secrets.AWS_REGION }}
 
       - run: |
-          aws cloudformation validate-template --template-body template.json
+          aws cloudformation validate-template --template-body BaCloudAcademyGithubCdkOlliethorpeStack.template.json
