@@ -4,7 +4,7 @@ on:
   push
 
 jobs:
-  say-hello:
+  build-artefacts:
     runs-on: ubuntu-latest
 
     steps:
@@ -16,9 +16,29 @@ jobs:
         with:
           python-version: '3.9'
 
-      - name: run python
+      - name: create artifacts
         working-directory: './scripts'
         run: |
-          python --version
           python my_script.py
+
+      - uses: actions/upload-artifact@v3
+        with:
+          name: my-text-artefact
+          path: artifacts/my_text_file.txt
+          
+  
+  print-artefact:
+    runs-on: ubuntu-latest
+    steps:
+      - name: download artefact
+        uses: actions/download-artifact@v3
+        with:
+          name: my-text-artefact
+          path: ./artifacts/my_text_file.txt
+
+      - name: echo artefact
+        shell: bash
+        run: |
+          cat ./artifacts/my_text_file.txt
+        
         
