@@ -12,9 +12,7 @@ jobs:
       with:
         python-version: '3.9'
     - shell: python
-      run: |
-        import os
-        print(f'${{ 'GLOBAL_MESSAGE' }}')"
+      run: print(f'${{ 'GLOBAL_MESSAGE' }}')"
 
   greet:
     runs-on: ubuntu-latest
@@ -25,6 +23,4 @@ jobs:
       with:
         pyhton-version: '3.9'
     - shell: python
-      run: |
-        import os
-        print(f'${{ 'GREETING_MESSAGE' }}')"
+      run: print(f'${{ 'GREETING_MESSAGE' }}')"
