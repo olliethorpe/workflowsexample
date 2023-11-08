@@ -1,9 +1,7 @@
 name: CDK Application
 
 on:
-  push:
-    branches:
-      - feature/CDK
+  push
     
 env:
   CDK_LOCAL_FOLDER: ./ba-cloud-academy-github-cdk-olliethorpe
