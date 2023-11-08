@@ -1,0 +1,24 @@
+name: testing env vars
+on: 
+  push
+env:
+  GLOBAL_MESSAGE: 'This is a global message'
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/setup-python@v4
+      with:
+        python-version: '3.9'
+    - run: pyhton -c "print(f'{env.GLOBAL_MESSAGE')"
+
+  greet:
+    runs-on: ubuntu-latest
+    env:
+      GREETING_MESSAGE: 'This is a greeting message'
+    steps:
+    - uses: actions/setup-python@v4
+      with:
+        pyhton-version: '3.9'
+    - run: pyhton -c "print(f'{env.GREETING_MESSAGE')"
