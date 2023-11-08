@@ -1,0 +1,10 @@
+name: Deploy CDK application
+
+on:
+  pull_request:
+    branches:
+        - main
+    types: [closed]
+
+env:
+    CDK_LOCAL_FOLDER: ./ba-cloud-academy-github-cdk-olliethorpe
