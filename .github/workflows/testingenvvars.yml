@@ -14,7 +14,7 @@ jobs:
     - shell: python
       run: |
         import os
-        print(f'{os.getenv('GLOBAL_MESSAGE')}')"
+        print(f'${{ 'GLOBAL_MESSAGE' }}')"
 
   greet:
     runs-on: ubuntu-latest
@@ -27,4 +27,4 @@ jobs:
     - shell: python
       run: |
         import os
-        print(f'{os.getenv('GREETING_MESSAGE')}')"
+        print(f'${{ 'GREETING_MESSAGE' }}')"
