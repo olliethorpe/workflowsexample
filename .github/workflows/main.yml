@@ -66,9 +66,8 @@ jobs:
         id: validation
         run: |
           cd ~/artifacts
-          validationStatus=$(aws cloudformation validate-template --template-body file://BaCloudAcademyGithubCdkOlliethorpeStack.template.json && echo "failure" || echo "failure")
-          cd ~
-          echo {"VSTATUS=$($validationStatus)"} >> $GITHUB_OUTPUT
+          validationStatus=$(aws cloudformation validate-template --template-body file://BaCloudAcademyGithubCdkOlliethorpeStack.template.json && echo "success" || echo "failure")
+          echo "VSTATUS=$($validationStatus)" >> $GITHUB_OUTPUT
     
   deploy:
     needs: verify
