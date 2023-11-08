@@ -72,9 +72,8 @@ jobs:
           else
             validationStatus="failure"
           fi
-
-          echo "VSTATUS=$($validationStatus)" >> $GITHUB_OUTPUT
-          echo $validationStatus
+          echo "VSTATUS=$validationStatus" >> $GITHUB_OUTPUT
+          echo $VSTATUS
         
  
   deploy:
