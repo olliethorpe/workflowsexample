@@ -37,12 +37,14 @@ jobs:
         with:
           name: cloudformation-template
           path: ./ba-cloud-academy-github-cdk-olliethorpe/cdk.out/
-   
+
   verify:
     needs: build
     runs-on: ubuntu-latest
+    outputs: 
+      validationStatus: ${{ steps.validation.outputs.validationStatus }}
     steps:
-      - name: download cloudformation-template
+      - name: Download cloudformation-template
         uses: actions/download-artifact@v3
         with:
           name: cloudformation-template
@@ -60,6 +62,44 @@ jobs:
           aws-region: ${{ secrets.AWS_REGION }}
 
       - name: Validate cloudformation template
+        id: validation
         run: |
           cd ~/artifacts
-          aws cloudformation validate-template --template-body file://BaCloudAcademyGithubCdkOlliethorpeStack.template.json
+          validationStatus=$(aws cloudformation validate-template --template-body file://BaCloudAcademyGithubCdkOlliethorpeStack.template.json && echo "failure" || echo "failure")
+          echo "::set-output name=validationStatus::${validationStatus}"
+    
+  deploy:
+    needs: verify
+    runs-on: ubuntu-latest
+    if: ${{ needs.verify.outputs.validationStatus == 'success' }}
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: 18
+
+      - name: Install AWS CDK
+        run: |
+          npm install -g aws-cdk
+
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v1
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: ${{ secrets.AWS_REGION }}
+
+      - name: Install Python dependencies
+        working-directory: ${{ env.CDK_LOCAL_FOLDER }} 
+        run: |
+          python -m pip install -r requirements.txt
+          
+      - name: Deploy to AWS
+        working-directory: ${{ env.CDK_LOCAL_FOLDER }} 
+        run: |
+          cdk deploy --require-approval never
+
+    
