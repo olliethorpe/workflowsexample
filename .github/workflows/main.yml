@@ -41,8 +41,6 @@ jobs:
   verify:
     needs: build
     runs-on: ubuntu-latest
-    outputs: 
-      vStatus: ${{ steps.validation.outputs.vStatus }}
     steps:
       - name: Download cloudformation-template
         uses: actions/download-artifact@v3
@@ -62,6 +60,7 @@ jobs:
           aws-region: ${{ secrets.AWS_REGION }}
 
       - name: Validate cloudformation template
+        shell: bash
         id: validation
         run: |
           cd ~/artifacts
@@ -71,7 +70,7 @@ jobs:
   deploy:
     needs: verify
     runs-on: ubuntu-latest
-    if: ${{ needs.verify.outputs.vStatus == 'success' }}
+    if: ${{ needs.verify.steps.validation.vStatus == 'success' }}
     steps:
       - name: Checkout repository
         uses: actions/checkout@v2
