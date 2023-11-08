@@ -12,7 +12,7 @@ class BaCloudAcademyGithubCdkOlliethorpeStack(Stack):
 
         bucket = s3.Bucket( 
             self, 
-            'bucket-object', 
-            bucket_name='CHANGE-THIS-BUCKET-NAME-TO-A-UNIQUE-NAME', 
+            'ollies-bucket-object', 
+            bucket_name='ollies-github-workflow-bucket', 
             removal_policy=RemovalPolicy.DESTROY 
         )
